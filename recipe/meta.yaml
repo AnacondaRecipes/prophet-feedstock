@@ -10,8 +10,8 @@ source:
   sha256: 3e682e8ea6e1ee26a92cf289f207d539f30e44879126c128ff8f4e360eb25a8b
 
 build:
-  number: 5
-  skip: true  # [win and py<37]
+  number: 0
+  skip: true  # [(win and py<37) or (py==310)]
   script: "{{ PYTHON }} -m pip install . -vv"
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl
