@@ -28,7 +28,6 @@ requirements:
     #
     # These requirements are copied from python/requirements.txt
     - cython >=0.22
-    - cmdstanpy ==0.9.68
     - pystan ~=2.19.1.1
     - numpy >=1.15.4
     - pandas >=1.0.4
@@ -42,7 +41,6 @@ requirements:
   run:
     - python
     - cython >=0.22
-    - cmdstanpy ==0.9.68
     - pystan ~=2.19.1.1
     - pandas >=1.0.4
     - matplotlib-base >=2.0.0
@@ -59,7 +57,10 @@ test:
     - prophet
     - prophet.tests
   commands:
-    - pip check
+    # 3/4/2022: Turning off 'pip check' because the requirements.txt
+    # lists 'cmdstanpy' which is an experimental backend that we are
+    # not supporting at this time.
+    #- pip check
     - py.test -v --pyargs prophet
   requires:
     - pip
