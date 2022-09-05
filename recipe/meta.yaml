@@ -35,7 +35,8 @@ requirements:
     # These requirements are copied from python/requirements.txt
     - cython >=0.22
     - pystan ~=2.19.1.1
-    - numpy >=1.15.4
+    # To fix numpy compatibility with scipy 1.7.3 build 2
+    - numpy >=1.15.4,<1.23
     - pandas >=1.0.4
     - matplotlib-base >=2.0.0
     - LunarCalendar >=0.0.9
@@ -63,13 +64,11 @@ test:
   imports:
     - prophet
     - prophet.tests
-  commands:
-    - echo "Running 'ls'" && ls -la {{ SP_DIR }}/stan_model/ || true  # [osx]
+  #commands:
     # 3/4/2022: Turning off 'pip check' because the requirements.txt
     # lists 'cmdstanpy' which is an experimental backend that we are
     # not supporting at this time.
     #- pip check
-    - py.test -v --pyargs prophet
   requires:
     - pip
     - pytest
