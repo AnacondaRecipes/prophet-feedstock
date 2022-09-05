@@ -64,7 +64,10 @@ test:
   imports:
     - prophet
     - prophet.tests
-  #commands:
+  commands:
+    - cat $SRC_DIR/conda_test_env_vars.sh
+    - cat $SRC_DIR/conda_test_runner.sh
+    - cat $SRC_DIR/run_test.sh
     # 3/4/2022: Turning off 'pip check' because the requirements.txt
     # lists 'cmdstanpy' which is an experimental backend that we are
     # not supporting at this time.
