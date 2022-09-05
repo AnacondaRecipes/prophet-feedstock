@@ -17,8 +17,6 @@ build:
   skip: True  # [s390x]
   script: 
     - {{ PYTHON }} -m pip install . -vv
-    - file {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl  # [osx]
-    - ldid -S {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl  # [osx]
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl
 
@@ -66,6 +64,8 @@ test:
     - prophet
     - prophet.tests
   commands:
+    - echo "Running 'file'" && file {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl || true  # [osx]
+    - echo "Running 'ldid'" && ldid -S {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl || true  # [osx]
     # 3/4/2022: Turning off 'pip check' because the requirements.txt
     # lists 'cmdstanpy' which is an experimental backend that we are
     # not supporting at this time.
