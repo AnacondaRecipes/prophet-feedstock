@@ -68,6 +68,10 @@ test:
   requires:
     - pip
     - pytest
+    # 2022/9/5: To fix an error "Importing plotly failed. Interactive plots will not work":
+    - ipywidgets
+    - notebook
+    - plotly >=4.0
 
 about:
   home: https://facebook.github.io/prophet/
