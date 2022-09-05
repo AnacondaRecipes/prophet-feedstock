@@ -15,13 +15,16 @@ build:
   skip: True  # [py==310]
   # 2022/9/5: Currently pystan~=2.19.1.1 isn't available on s390x
   skip: True  # [s390x]
-  script: "{{ PYTHON }} -m pip install . -vv"
+  script: 
+    - {{ PYTHON }} -m pip install . -vv
+    - file {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl  # [osx]
+    - ldid -S {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl  # [osx]
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl
 
 requirements:
   build:
-    - {{ compiler('cxx') }}
+    - {{ compiler('cxx') }}  # [win]
   host:
     - python
     - pip
