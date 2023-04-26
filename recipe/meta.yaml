@@ -8,41 +8,33 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 3cfb7665962e983b05367f65f37692d9c8569a86335f3f163925ec89a128bfab
-  patches:
-    - fix_deps.patch
 
 build:
   number: 0
-  skip: true  # [py<37 or py>=310]
-  # Currently pystan~=2.19.1.1 isn't available on s390x
-  skip: True  # [s390x]
+  skip: true  # [py<37]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl
 
 requirements:
-  build:
-    - patch  # [unix]
-    - m2-patch # [win]
   host:
     - python
-    - cython 0.29.33
+    - cmdstanpy
     - numpy {{ numpy }}
     - pip
-    - pystan 2.19.1.1
     - setuptools
     - wheel
   run:
     - python
-    - pystan ~=2.19.1.1
-    - pandas >=1.0.4
-    - matplotlib-base >=2.0.0
-    - LunarCalendar >=0.0.9
+    - {{ pin_compatible('numpy') }}
+    - cmdstanpy >=1.0.4
     - convertdate >=2.1.2
     - holidays >=0.14.2
+    - LunarCalendar >=0.0.9
+    - matplotlib-base >=2.0.0
+    - pandas >=1.0.4
     - python-dateutil >=2.8.0
     - tqdm >=4.36.1
-    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
