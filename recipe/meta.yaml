@@ -8,6 +8,8 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 3cfb7665962e983b05367f65f37692d9c8569a86335f3f163925ec89a128bfab
+  patches:
+    - fix_deps.patch
 
 build:
   number: 0
@@ -19,6 +21,9 @@ build:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl
 
 requirements:
+  build:
+    - patch  # [unix]
+    - m2-patch # [win]
   host:
     - python
     - cython 0.29.33
