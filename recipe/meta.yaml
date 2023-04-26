@@ -7,11 +7,13 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3e682e8ea6e1ee26a923cfb7665962e983b05367f65f37692d9c8569a86335f3f163925ec89a128bfabcf289f207d539f30e44879126c128ff8f4e360eb25a8b
+  sha256: 3cfb7665962e983b05367f65f37692d9c8569a86335f3f163925ec89a128bfab
 
 build:
   number: 0
   skip: true  # [py<37 or py>=310]
+  # Currently pystan~=2.19.1.1 isn't available on s390x
+  skip: True  # [s390x]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl
@@ -44,12 +46,14 @@ test:
   requires:
     - pip
     - pytest
-  commands:
     # 3/4/2022: Turning off 'pip check' because the requirements.txt
     # lists 'cmdstanpy' which is an experimental backend that we are
     # not supporting at this time.
     #- pip check
-    - pytest -v --pyargs prophet
+    # 2022/9/5: To fix an error "Importing plotly failed. Interactive plots will not work":
+    - ipywidgets
+    - notebook
+    - plotly >=4.0
 
 about:
   home: https://facebook.github.io/prophet/
