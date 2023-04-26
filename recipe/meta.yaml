@@ -1,5 +1,5 @@
 {% set name = "prophet" %}
-{% set version = "1.0.1" %}
+{% set version = "1.1.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,48 +7,32 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3e682e8ea6e1ee26a92cf289f207d539f30e44879126c128ff8f4e360eb25a8b
+  sha256: 3e682e8ea6e1ee26a923cfb7665962e983b05367f65f37692d9c8569a86335f3f163925ec89a128bfabcf289f207d539f30e44879126c128ff8f4e360eb25a8b
 
 build:
   number: 0
-  # As of 3/4/2022, we don't have the deps built out to support a py310 build.
-  skip: true  # [py==310]
-  script: "{{ PYTHON }} -m pip install . -vv"
+  skip: true  # [py<37 or py>=310]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl
 
 requirements:
   host:
     - python
+    - cython 0.29.33
+    - numpy {{ numpy }}
     - pip
-    # Explanation:
-    #
-    # setup.py imports fbprophet.models.StanBackendEnum, triggering
-    # fbprophet/__init__.py and thus making the runtime dependencies
-    # also build-time dependencies.
-    #
-    # These requirements are copied from python/requirements.txt
-    - cython >=0.22
-    - pystan ~=2.19.1.1
-    - numpy >=1.15.4
-    - pandas >=1.0.4
-    - matplotlib-base >=2.0.0
-    - LunarCalendar >=0.0.9
-    - convertdate >=2.1.2
-    - holidays >=0.10.2
-    - setuptools-git >=1.2
-    - python-dateutil >=2.8.0
-    - tqdm >=4.36.1
+    - pystan 2.19.1.1
+    - setuptools
+    - wheel
   run:
     - python
-    - cython >=0.22
     - pystan ~=2.19.1.1
     - pandas >=1.0.4
     - matplotlib-base >=2.0.0
     - LunarCalendar >=0.0.9
     - convertdate >=2.1.2
-    - holidays >=0.10.2
-    - setuptools-git >=1.2
+    - holidays >=0.14.2
     - python-dateutil >=2.8.0
     - tqdm >=4.36.1
     - {{ pin_compatible('numpy') }}
@@ -57,15 +41,15 @@ test:
   imports:
     - prophet
     - prophet.tests
+  requires:
+    - pip
+    - pytest
   commands:
     # 3/4/2022: Turning off 'pip check' because the requirements.txt
     # lists 'cmdstanpy' which is an experimental backend that we are
     # not supporting at this time.
     #- pip check
-    - py.test -v --pyargs prophet
-  requires:
-    - pip
-    - pytest
+    - pytest -v --pyargs prophet
 
 about:
   home: https://facebook.github.io/prophet/
