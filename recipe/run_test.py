@@ -6,6 +6,11 @@ import sys
 import pytest
 from prophet import Prophet
 
+try:
+    import prophet.tests
+except ImportError:
+    print('Error: Unable to import prophet.tests')
+    sys.exit(1)
 
 def go():
     py_major = sys.version_info[0]

@@ -1,5 +1,5 @@
 {% set name = "prophet" %}
-{% set version = "1.1.2" %}
+{% set version = "1.1.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,19 +7,23 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3cfb7665962e983b05367f65f37692d9c8569a86335f3f163925ec89a128bfab
+  sha256: f8d6d45a4391fdf740c7b74f79a72313f95a5f6e3417eaf1c68892b47b920646
 
 build:
   number: 0
   skip: true  # [py<37]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  binary_has_prefix_files:
-    - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.pkl
+  # To use our own cmdstan rather than download and build a different one:
+  script_env:
+    - PROPHET_REPACKAGE_CMDSTAN=False
+  missing_dso_whitelist:
+    - lib/libtbb.12.dylib
+    - lib/libc++.1.dylib
 
 requirements:
   host:
     - python
-    - cmdstanpy
+    - cmdstanpy 1.1.0
     - numpy {{ numpy }}
     - pip
     - setuptools
@@ -35,22 +39,16 @@ requirements:
     - pandas >=1.0.4
     - python-dateutil >=2.8.0
     - tqdm >=4.36.1
+    - importlib_resources
 
 test:
-  imports:
-    - prophet
-    - prophet.tests
   requires:
     - pip
     - pytest
-    # 3/4/2022: Turning off 'pip check' because the requirements.txt
-    # lists 'cmdstanpy' which is an experimental backend that we are
-    # not supporting at this time.
-    #- pip check
-    # 2022/9/5: To fix an error "Importing plotly failed. Interactive plots will not work":
-    - ipywidgets
     - notebook
-    - plotly >=4.0
+    - plotly
+  commands:
+    - pip check
 
 about:
   home: https://facebook.github.io/prophet/
