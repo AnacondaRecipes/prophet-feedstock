@@ -31,6 +31,7 @@ requirements:
     - setuptools
     - wheel
     - tbb-devel
+    - cmdstan
   run:
     - python
     - {{ pin_compatible('numpy') }}
@@ -43,6 +44,7 @@ requirements:
     - python-dateutil >=2.8.0
     - tqdm >=4.36.1
     - importlib_resources
+    - cmdstan
 
 test:
   requires:
