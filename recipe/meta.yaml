@@ -11,7 +11,8 @@ source:
 
 build:
   number: 0
-  skip: true  # [py<37]
+  # LunarCalendar, which is a noarch package, requires ephem, unavailable on s390x
+  skip: true  # [py<37 or s390x]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
