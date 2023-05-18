@@ -20,6 +20,9 @@ build:
     - PROPHET_REPACKAGE_CMDSTAN=False
 
 requirements:
+  build:
+    - {{ compiler('cxx') }}  # [not win]
+    - {{ compiler('m2w64_cxx') }}  # [win]
   host:
     - python
     - cmdstanpy 1.1.0
@@ -28,7 +31,6 @@ requirements:
     - setuptools
     - wheel
     - tbb-devel
-    - libcxx
   run:
     - python
     - {{ pin_compatible('numpy') }}
@@ -41,7 +43,6 @@ requirements:
     - python-dateutil >=2.8.0
     - tqdm >=4.36.1
     - importlib_resources
-    - libcxx
 
 test:
   requires:
