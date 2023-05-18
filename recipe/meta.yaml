@@ -13,12 +13,11 @@ build:
   number: 0
   skip: true  # [py<37]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  binary_has_prefix_files:
+    - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
   # To use our own cmdstan rather than download and build a different one:
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=False
-  missing_dso_whitelist:
-    - lib/libtbb.12.dylib
-    - lib/libc++.1.dylib
 
 requirements:
   host:
@@ -28,6 +27,8 @@ requirements:
     - pip
     - setuptools
     - wheel
+    - tbb-devel
+    - libcxx
   run:
     - python
     - {{ pin_compatible('numpy') }}
@@ -40,6 +41,7 @@ requirements:
     - python-dateutil >=2.8.0
     - tqdm >=4.36.1
     - importlib_resources
+    - libcxx
 
 test:
   requires:
