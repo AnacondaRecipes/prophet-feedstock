@@ -19,6 +19,11 @@ build:
   # To use our own cmdstan rather than download and build a different one:
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=False
+    - PRECOMPILED_HEADERS=false 
+  ignore_prefix_files:
+    - bin/cmdstan/src/stan/model/model_header.hpp.gch
+    - bin/cmdstan/src/stan/model/main.d
+    - bin/cmdstan/src/cmdstan/main.d
 
 requirements:
   build:
@@ -26,6 +31,8 @@ requirements:
     - {{ compiler('m2w64_cxx') }}  # [win]
     - m2w64-make                   # [win]
     - m2-bash  # [win]
+    - m2w64-libwinpthread-git      # [win]
+    - m2w64-gcc-libs-core          # [win]
   host:
     - python
     - cmdstanpy 1.1.0
@@ -33,8 +40,8 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - tbb-devel
-    - cmdstan
+    - tbb-devel 2021.8.0
+    - cmdstan 2.31.0
   run:
     - python
     - {{ pin_compatible('numpy') }}
