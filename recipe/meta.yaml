@@ -28,7 +28,6 @@ requirements:
     - {{ compiler('m2w64_cxx') }}  # [win]
     - m2w64-make                   # [win]
     - m2-coreutils                 # [win]
-    - m2w64-gcc-libs-core          # [win]
   host:
     - python
     - cmdstanpy 1.1.0
@@ -38,7 +37,6 @@ requirements:
     - wheel
     - tbb-devel 2021.8.0
     - cmdstan 2.31.0
-    - boost-cpp 1.73
     - libboost 1.73
   run:
     - python
