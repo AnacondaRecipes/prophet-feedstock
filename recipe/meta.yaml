@@ -9,7 +9,6 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: f8d6d45a4391fdf740c7b74f79a72313f95a5f6e3417eaf1c68892b47b920646
 
-# --global-option=build_ext --global-option="-I%LIBRARY_INC%"
 build:
   number: 0
   # LunarCalendar, which is a noarch package, requires ephem, unavailable on s390x
@@ -29,7 +28,6 @@ requirements:
     - {{ compiler('m2w64_cxx') }}  # [win]
     - m2w64-make                   # [win]
     - m2-coreutils                 # [win]
-    - m2w64-libwinpthread-git      # [win]
     - m2w64-gcc-libs-core          # [win]
   host:
     - python
