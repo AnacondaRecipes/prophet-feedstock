@@ -19,7 +19,7 @@ build:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
   # To use our own cmdstan rather than download and build a different one:
   script_env:
-    - PROPHET_REPACKAGE_CMDSTAN=False
+    - PROPHET_REPACKAGE_CMDSTAN=false
 
 requirements:
   build:
