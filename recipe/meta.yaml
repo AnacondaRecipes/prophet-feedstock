@@ -9,6 +9,7 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: f8d6d45a4391fdf740c7b74f79a72313f95a5f6e3417eaf1c68892b47b920646
 
+# --global-option=build_ext --global-option="-I%LIBRARY_INC%"
 build:
   number: 0
   # LunarCalendar, which is a noarch package, requires ephem, unavailable on s390x
@@ -20,6 +21,9 @@ build:
   # To use our own cmdstan rather than download and build a different one:
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=false
+    - BOOST="${LIBRARY_INC}"
+    - STAN="${LIBRARY_INC}"
+    - TBB="${LIBRARY_INC}"
 
 requirements:
   build:
@@ -49,7 +53,6 @@ requirements:
     - tqdm >=4.36.1
     - importlib_resources
     - cmdstan
-    - pystan >=2.19.1.1
 
 test:
   requires:
