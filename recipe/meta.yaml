@@ -22,8 +22,6 @@ build:
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=false
     - BOOST="${LIBRARY_INC}"
-    - STAN="${LIBRARY_INC}"
-    - TBB="${LIBRARY_INC}"
 
 requirements:
   build:
