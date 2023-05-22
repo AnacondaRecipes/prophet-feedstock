@@ -38,7 +38,8 @@ requirements:
     - wheel
     - tbb-devel
     - cmdstan
-    - pystan 2.19.1.1
+    - boost-cpp
+    - libboost
 
   run:
     - python
