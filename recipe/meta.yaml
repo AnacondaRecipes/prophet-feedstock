@@ -36,11 +36,10 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - tbb-devel
-    - cmdstan
-    - boost-cpp
-    - libboost
-
+    - tbb-devel 2021.8.0
+    - cmdstan 2.31.0
+    - boost-cpp 1.73
+    - libboost 1.73
   run:
     - python
     - {{ pin_compatible('numpy') }}
