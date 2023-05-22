@@ -12,7 +12,8 @@ source:
 build:
   number: 0
   # LunarCalendar, which is a noarch package, requires ephem, unavailable on s390x
-  skip: true  # [py<37 or not win]
+  # https://blog.quantinsti.com/installing-prophet-library-windows/
+  skip: true  # [py<39 or not win]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
