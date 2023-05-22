@@ -34,6 +34,8 @@ requirements:
     - wheel
     - tbb-devel
     - cmdstan
+    - pystan 2.19.1.1
+
   run:
     - python
     - {{ pin_compatible('numpy') }}
@@ -47,6 +49,7 @@ requirements:
     - tqdm >=4.36.1
     - importlib_resources
     - cmdstan
+    - pystan >=2.19.1.1
 
 test:
   requires:
