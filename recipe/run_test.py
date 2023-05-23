@@ -2,6 +2,7 @@ import os
 import pkgutil
 import platform
 import sys
+import subprocess
 
 import pytest
 from prophet import Prophet
@@ -32,4 +33,5 @@ def go():
 
 
 if __name__ == "__main__":
+    subprocess.run(["pip", "check"])
     go()

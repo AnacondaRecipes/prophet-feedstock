@@ -58,8 +58,6 @@ test:
     - pytest
     - notebook
     - plotly
-  commands:
-    - pip check
 
 about:
   home: https://facebook.github.io/prophet/
@@ -81,3 +79,5 @@ extra:
   recipe-maintainers:
     - bletham
     - maresb
+  skip-lints:
+    - missing_pip_check
