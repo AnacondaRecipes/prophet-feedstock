@@ -1,5 +1,5 @@
 {% set name = "prophet" %}
-{% set version = "1.1.4" %}
+{% set version = "1.1.5" %}
 
 package:
   name: {{ name|lower }}
@@ -7,9 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 7f91e4ba322786e9512158783800b6eafb002200a7b3e9eadc13d7ff4d6e0634
-  patches:
-    - setup-make-folder.patch
+  sha256: 80973c0b8a22d835bfa9d6665a78ebc63115135eaef0f73b46ee14e9bad3ca1a
 
 build:
   number: 0
@@ -21,7 +19,9 @@ build:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
   # To use our own cmdstan rather than download and build a different one:
   script_env:
+  script_env:
     - PROPHET_REPACKAGE_CMDSTAN=false
+    - PRECOMPILED_HEADERS=false
     - BOOST="${LIBRARY_INC}"  # [win]
 
 requirements:
@@ -34,7 +34,7 @@ requirements:
     - patch     # [not win]
   host:
     - python
-    - cmdstan 2.31.0
+    - cmdstan 2.33.1
     - cmdstanpy 1.1.0
     - libboost 1.73
     - numpy {{ numpy }}
