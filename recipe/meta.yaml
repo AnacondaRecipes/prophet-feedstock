@@ -37,7 +37,7 @@ requirements:
     - cmdstan 2.33.1
     - cmdstanpy 1.1.0
     - libboost 1.73
-    - numpy {{ numpy }}
+    - numpy 1.23
     - pip
     - setuptools
     - tbb-devel 2021.8.0
