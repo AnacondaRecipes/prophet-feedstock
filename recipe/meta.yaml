@@ -36,7 +36,8 @@ requirements:
     - cmdstan 2.33.1
     - cmdstanpy 1.1.0
     - libboost 1.73
-    - numpy 1.23
+    - numpy 1.23         # [py<311]
+    - numpy {{ numpy }}  # [py>=311]
     - pip
     - setuptools
     - tbb-devel 2021.8.0
@@ -44,7 +45,6 @@ requirements:
   run:
     - python
     - {{ pin_compatible('numpy') }}
-    - cmdstan
     - cmdstanpy >=1.0.4
     - convertdate >=2.1.2
     - holidays >=0.25.0
