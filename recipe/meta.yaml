@@ -35,7 +35,6 @@ requirements:
     - python
     - cmdstan 2.33.1
     - cmdstanpy 1.1.0
-    - libboost 1.73
     - numpy 1.23         # [py<311]
     - numpy {{ numpy }}  # [py>=311]
     - pip
