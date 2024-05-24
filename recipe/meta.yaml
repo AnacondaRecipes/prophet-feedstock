@@ -33,25 +33,18 @@ requirements:
     - m2-coreutils                 # [win]
   host:
     - python
-    - cmdstan 2.33.1
     - cmdstanpy 1.1.0
-    - numpy 1.23         # [py<311]
-    - numpy {{ numpy }}  # [py>=311]
     - pip
     - setuptools
-    - tbb-devel 2021.8.0
     - wheel
   run:
     - python
     - {{ pin_compatible('numpy') }}
     - cmdstanpy >=1.0.4
-    - convertdate >=2.1.2
     - holidays >=0.25.0
     - importlib_resources
-    - LunarCalendar >=0.0.9
     - matplotlib-base >=2.0.0
     - pandas >=1.0.4
-    - python-dateutil >=2.8.0
     - tqdm >=4.36.1
 
 test:
