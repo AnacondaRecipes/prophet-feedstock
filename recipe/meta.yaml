@@ -22,7 +22,6 @@ build:
   # To use our own cmdstan rather than download and build a different one:
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=false
-    - PRECOMPILED_HEADERS=false  # [win]
     - BOOST="${LIBRARY_INC}"  # [win]
   missing_dso_whitelist:
     - lib/libtbb.12.dylib  # [osx]
