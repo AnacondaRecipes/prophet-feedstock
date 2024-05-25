@@ -26,7 +26,7 @@ build:
   missing_dso_whitelist:
     - lib/libtbb.12.dylib  # [osx]
     - lib/libtbb.so.12      # [linux]
-    - libgfortran.so.5.0.0  # [linux]
+#    - libgfortran.so.5.0.0  # [linux]
 
 requirements:
   build:
