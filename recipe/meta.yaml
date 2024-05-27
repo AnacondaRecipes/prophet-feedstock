@@ -36,6 +36,7 @@ requirements:
   host:
     - python
     - cmdstanpy 1.1.0
+    - libboost  # [win]
     - pip
     - setuptools
     - wheel
