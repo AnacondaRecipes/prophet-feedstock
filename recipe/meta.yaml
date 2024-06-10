@@ -1,5 +1,5 @@
 {% set name = "prophet" %}
-{% set version = "1.1.4" %}
+{% set version = "1.1.5" %}
 
 package:
   name: {{ name|lower }}
@@ -7,9 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 7f91e4ba322786e9512158783800b6eafb002200a7b3e9eadc13d7ff4d6e0634
-  patches:
-    - setup-make-folder.patch
+  sha256: 80973c0b8a22d835bfa9d6665a78ebc63115135eaef0f73b46ee14e9bad3ca1a
 
 build:
   number: 0
@@ -30,30 +28,22 @@ requirements:
     - {{ compiler('m2w64_cxx') }}  # [win]
     - m2w64-make                   # [win]
     - m2-coreutils                 # [win]
-    - m2-patch  # [win]
-    - patch     # [not win]
   host:
     - python
-    - cmdstan 2.31.0
     - cmdstanpy 1.1.0
-    - libboost 1.73
-    - numpy {{ numpy }}
+    - libboost  # [win]
+    - tbb-devel
     - pip
     - setuptools
-    - tbb-devel 2021.8.0
     - wheel
   run:
     - python
-    - {{ pin_compatible('numpy') }}
-    - cmdstan
+    - numpy >=1.15.4
     - cmdstanpy >=1.0.4
-    - convertdate >=2.1.2
     - holidays >=0.25.0
     - importlib_resources
-    - LunarCalendar >=0.0.9
     - matplotlib-base >=2.0.0
     - pandas >=1.0.4
-    - python-dateutil >=2.8.0
     - tqdm >=4.36.1
 
 test:
