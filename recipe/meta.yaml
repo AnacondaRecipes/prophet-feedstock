@@ -12,12 +12,12 @@ source:
 build:
   number: 0
   skip: true  # [py<37]
+  script_env:
+    - PROPHET_REPACKAGE_CMDSTAN=false
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
   # To use our own cmdstan rather than download and build a different one:
-  script_env:
-    - PROPHET_REPACKAGE_CMDSTAN=false
 
 requirements:
   build:
