@@ -14,10 +14,14 @@ build:
   skip: true  # [py<37]
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=false
+    - PRECOMPILED_HEADERS=false
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
-  # To use our own cmdstan rather than download and build a different one:
+  ignore_prefix_files:
+    - bin/cmdstan/src/stan/model/model_header.hpp.gch
+    - bin/cmdstan/src/stan/model/main.d
+    - bin/cmdstan/src/cmdstan/main.d
 
 requirements:
   build:
