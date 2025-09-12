@@ -18,7 +18,6 @@ build:
   # To use our own cmdstan rather than download and build a different one:
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=false
-    - BOOST="${LIBRARY_INC}"  # [win]
 
 requirements:
   build:
