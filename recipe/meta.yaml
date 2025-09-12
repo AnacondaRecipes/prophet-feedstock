@@ -1,5 +1,5 @@
 {% set name = "prophet" %}
-{% set version = "1.1.5" %}
+{% set version = "1.1.7" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 80973c0b8a22d835bfa9d6665a78ebc63115135eaef0f73b46ee14e9bad3ca1a
+  sha256: 97ef633a7d2d3bb7237f58b6990a68467c3c8089f605ea364b03f842ab3ea9cf
 
 build:
   number: 0
-  # LunarCalendar, which is a noarch package, requires ephem, unavailable on s390x
-  # https://blog.quantinsti.com/installing-prophet-library-windows/
-  skip: true  # [py<37 or (linux and s390x)]
+  skip: true  # [py<37]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
@@ -29,32 +27,40 @@ requirements:
     - m2w64-make                   # [win]
     - m2-coreutils                 # [win]
   host:
-    - python
-    - cmdstanpy 1.1.0
-    - libboost  # [win]
-    - tbb-devel
     - pip
-    - setuptools
-    - wheel
+    - python
+    - setuptools >=64
+    - cmdstanpy >=1.0.4
+    - tbb-devel
   run:
     - python
-    - numpy >=1.15.4
     - cmdstanpy >=1.0.4
-    - holidays >=0.25.0
-    - importlib_resources
+    - numpy >=1.15.4
     - matplotlib-base >=2.0.0
     - pandas >=1.0.4
+    - holidays >=0.25.0,<1
     - tqdm >=4.36.1
+    - importlib_resources
 
 test:
+  imports:
+    - prophet
+    - prophet.diagnostics
+    - prophet.forecaster
+    - prophet.make_holidays
+    - prophet.models
+    - prophet.plot
+    - prophet.serialize
+    - prophet.utilities
+  commands:
+    - pip check
+    - pytest --pyargs prophet.tests
   requires:
     - pip
     - pytest
-    - notebook
-    - plotly
 
 about:
-  home: https://facebook.github.io/prophet/
+  home: https://facebook.github.io/prophet
   license: MIT
   license_family: MIT
   license_file: LICENSE
