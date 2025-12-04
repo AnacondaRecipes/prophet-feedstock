@@ -26,7 +26,6 @@ build:
 requirements:
   build:
     - {{ stdlib('c') }}             # [not win]
-    - {{ stdlib('ucrt64_c') }}      # [win]
     - {{ compiler('cxx') }}         # [not win]
     - {{ compiler('ucrt64_cxx') }}  # [win]
     - ucrt64-make                   # [win]
