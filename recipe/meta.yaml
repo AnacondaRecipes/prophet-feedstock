@@ -11,9 +11,10 @@ source:
 
 build:
   number: 0
-  # LunarCalendar, which is a noarch package, requires ephem, unavailable on s390x
   # https://blog.quantinsti.com/installing-prophet-library-windows/
   skip: true  # [py<37]
+  # cmdstan is not available for osx-arm64
+  skip: true  # [osx]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
@@ -27,8 +28,8 @@ requirements:
     - {{ stdlib('c') }}
     - {{ compiler('cxx') }}        # [not win]
     - {{ compiler('m2w64_cxx') }}  # [win]
-    - m2w64-make                   # [win]
-    - m2-coreutils                 # [win]
+    - ucrt64-make                  # [win]
+    - msys2-coreutils              # [win]
   host:
     - python
     - cmdstanpy 1.1.0
