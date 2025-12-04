@@ -1,5 +1,5 @@
 {% set name = "prophet" %}
-{% set version = "1.1.5" %}
+{% set version = "1.2.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,44 +7,45 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 80973c0b8a22d835bfa9d6665a78ebc63115135eaef0f73b46ee14e9bad3ca1a
+  sha256: 0c06a1de02396b95022aec60178d9348412c2799572b1b13315c6d045106471f
 
 build:
   number: 0
   # LunarCalendar, which is a noarch package, requires ephem, unavailable on s390x
   # https://blog.quantinsti.com/installing-prophet-library-windows/
-  skip: true  # [py<37 or (linux and s390x)]
+  skip: true  # [py<37]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
   # To use our own cmdstan rather than download and build a different one:
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=false
-    - BOOST="${LIBRARY_INC}"  # [win]
+    - BOOST="${LIBRARY_INC}"       # [win]
 
 requirements:
   build:
-    - {{ compiler('cxx') }}  # [not win]
+    - {{ stdlib('c') }}
+    - {{ compiler('cxx') }}        # [not win]
     - {{ compiler('m2w64_cxx') }}  # [win]
     - m2w64-make                   # [win]
     - m2-coreutils                 # [win]
   host:
     - python
     - cmdstanpy 1.1.0
-    - libboost  # [win]
+    - libboost                     # [win]
     - tbb-devel
     - pip
-    - setuptools
+    - setuptools >=64
     - wheel
   run:
     - python
-    - numpy >=1.15.4
     - cmdstanpy >=1.0.4
-    - holidays >=0.25.0
-    - importlib_resources
+    - numpy >=1.15.4
     - matplotlib-base >=2.0.0
     - pandas >=1.0.4
+    - holidays >=0.25.0,<1
     - tqdm >=4.36.1
+    - importlib_resources
 
 test:
   requires:
