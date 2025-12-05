@@ -28,15 +28,14 @@ def go():
 
     loader = pkgutil.get_loader("prophet.tests")
     tests_dir = os.path.dirname(loader.path)
+    pytest_args = [tests_dir, "-vv"]
     
     # Workaround for pytest fixture discovery on Windows Python 3.10
-    # pytest 8.4.2 has issues finding conftest.py in this specific combination
-    # Add tests directory to Python path to help pytest discover conftest.py
+    # pytest 8.4.2 has issues finding conftest.py when rootdir is set to build directory
+    # Explicitly set rootdir to tests directory so conftest.py can be discovered
     if is_windows and py_major == 3 and py_minor == 10:
-        if tests_dir not in sys.path:
-            sys.path.insert(0, tests_dir)
+        pytest_args.insert(1, f"--rootdir={tests_dir}")
     
-    pytest_args = [tests_dir, "-vv"]
     print("Final pytest args:", pytest_args)
 
     # actually run the tests
