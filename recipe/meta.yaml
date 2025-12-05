@@ -21,7 +21,7 @@ build:
   # To use our own cmdstan rather than download and build a different one:
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=false
-    - BOOST="${LIBRARY_INC}"        # [win]
+    - BOOST={{ LIBRARY_INC }}        # [win]
 
 requirements:
   build:
@@ -33,7 +33,7 @@ requirements:
   host:
     - python
     - cmdstanpy 1.1.0
-    - libboost                      # [win]
+    - boost-cpp                     # [win]
     - tbb-devel
     - pip
     - setuptools >=64
