@@ -28,7 +28,7 @@ requirements:
     - {{ stdlib('c') }}             # [not win]
     - {{ compiler('cxx') }}         # [not win]
     - {{ compiler('ucrt64_cxx') }}  # [win]
-    - ucrt64-make                   # [win]
+    - msys2-make                   # [win]
     - msys2-coreutils               # [win]
   host:
     - python
