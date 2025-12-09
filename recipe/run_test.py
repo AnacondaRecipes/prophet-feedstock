@@ -15,8 +15,10 @@ except ImportError:
 
 def go():
     py_major = sys.version_info[0]
+    py_minor = sys.version_info[1]
     py_impl = platform.python_implementation().lower()
     machine = platform.machine().lower()
+    is_windows = platform.system().lower() == 'windows'
 
     print("Python implementation:", py_impl)
     print("              Machine:", machine)
@@ -25,7 +27,15 @@ def go():
     print(f'Using backend: {m.stan_backend.get_type()}')
 
     loader = pkgutil.get_loader("prophet.tests")
-    pytest_args = [os.path.dirname(loader.path), "-vv"]
+    tests_dir = os.path.dirname(loader.path)
+    pytest_args = [tests_dir, "-vv"]
+    
+    # Workaround for pytest fixture discovery on Windows Python 3.10
+    # pytest 8.4.2 has issues finding conftest.py when rootdir is set to build directory
+    # Explicitly set rootdir to tests directory so conftest.py can be discovered
+    if is_windows and py_major == 3 and py_minor == 10:
+        pytest_args.insert(1, f"--rootdir={tests_dir}")
+    
     print("Final pytest args:", pytest_args)
 
     # actually run the tests
