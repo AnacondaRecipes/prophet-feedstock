@@ -13,8 +13,6 @@ build:
   number: 0
   # https://blog.quantinsti.com/installing-prophet-library-windows/
   skip: true  # [py<37]
-  # cmdstan is not available for osx-arm64
-  skip: true  # [osx]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
@@ -57,7 +55,7 @@ test:
     - plotly
 
 about:
-  home: https://facebook.github.io/prophet/
+  home: https://facebook.github.io/prophet
   license: MIT
   license_family: MIT
   license_file: LICENSE
