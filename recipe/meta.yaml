@@ -1,39 +1,38 @@
 {% set name = "prophet" %}
-{% set version = "1.2.1" %}
+{% set version = "1.3.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 0c06a1de02396b95022aec60178d9348412c2799572b1b13315c6d045106471f
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7ec252e898199a1965ca10db3ca625a4ec75e4e6f738d2b4108fe603666a9ef0
 
 build:
   number: 0
   # https://blog.quantinsti.com/installing-prophet-library-windows/
   skip: true  # [py<37]
-  # cmdstan is not available for osx-arm64
-  skip: true  # [osx]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   binary_has_prefix_files:
     - {{ SP_DIR|replace("\\", "/") }}/stan_model/prophet_model.bin
   # To use our own cmdstan rather than download and build a different one:
   script_env:
     - PROPHET_REPACKAGE_CMDSTAN=false
-    - BOOST="${LIBRARY_INC}"        # [win]
+    - BOOST="${LIBRARY_INC}"  # [win]
 
 requirements:
   build:
-    - {{ stdlib('c') }}             # [not win]
-    - {{ compiler('cxx') }}         # [not win]
+    - {{ stdlib('c') }}  # [not win]
+    - {{ compiler('cxx') }}  # [not win]
     - {{ compiler('ucrt64_cxx') }}  # [win]
-    - msys2-make                   # [win]
-    - msys2-coreutils               # [win]
+    - msys2-make  # [win]
+    - msys2-coreutils  # [win]
+    - {{ compiler('c') }}
   host:
     - python
-    - cmdstanpy 1.1.0
-    - boost-cpp                     # [win]
+    - cmdstanpy >=1.0.4
+    - boost-cpp  # [win]
     - tbb-devel
     - pip
     - setuptools >=64
@@ -44,7 +43,7 @@ requirements:
     - numpy >=1.15.4
     - matplotlib-base >=2.0.0
     - pandas >=1.0.4
-    - holidays >=0.25.0,<1
+    - holidays >=0.25,<1
     - tqdm >=4.36.1
     - importlib_resources
 
@@ -56,7 +55,7 @@ test:
     - plotly
 
 about:
-  home: https://facebook.github.io/prophet/
+  home: https://facebook.github.io/prophet
   license: MIT
   license_family: MIT
   license_file: LICENSE
