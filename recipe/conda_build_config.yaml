@@ -1,0 +1,5 @@
+# Newer clang has issues with compiled sections of the code
+c_compiler_version:    # [osx]
+  - 17                 # [osx]
+cxx_compiler_version:  # [osx]
+  - 17                 # [osx]
