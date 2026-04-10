@@ -57,6 +57,7 @@ test:
     - pytest
     - notebook
     - plotly
+    - tbb
 
 about:
   home: https://facebook.github.io/prophet
