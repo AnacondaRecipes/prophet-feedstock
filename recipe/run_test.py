@@ -1,5 +1,5 @@
 import os
-import pkgutil
+import importlib.util
 import platform
 import sys
 import subprocess
@@ -26,8 +26,18 @@ def go():
     m = Prophet()
     print(f'Using backend: {m.stan_backend.get_type()}')
 
-    loader = pkgutil.get_loader("prophet.tests")
-    tests_dir = os.path.dirname(loader.path)
+    spec = importlib.util.find_spec("prophet.tests")
+    if spec is None:
+        print("Error: could not find module spec for prophet.tests")
+        sys.exit(1)
+    if spec.submodule_search_locations:
+        tests_dir = os.fspath(next(iter(spec.submodule_search_locations)))
+    elif spec.origin:
+        tests_dir = os.path.dirname(os.fspath(spec.origin))
+    else:
+        print("Error: could not determine tests directory for prophet.tests")
+        sys.exit(1)
+
     pytest_args = [tests_dir, "-vv"]
     
     # Workaround for pytest fixture discovery on Windows Python 3.10
@@ -43,5 +53,5 @@ def go():
 
 
 if __name__ == "__main__":
-    subprocess.run(["pip", "check"])
+    subprocess.run([sys.executable, "-m", "pip", "check"], check=False)
     go()
