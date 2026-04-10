@@ -10,7 +10,7 @@ source:
   sha256: 7ec252e898199a1965ca10db3ca625a4ec75e4e6f738d2b4108fe603666a9ef0
 
 build:
-  number: 0
+  number: 1
   # https://blog.quantinsti.com/installing-prophet-library-windows/
   skip: true  # [py<37]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
@@ -38,6 +38,7 @@ requirements:
     - setuptools >=64
     - wheel
     - cmdstanpy >=1.0.4
+    - cmdstan >=2.34
     - tbb-devel
   run:
     - python
@@ -46,6 +47,7 @@ requirements:
     - matplotlib-base >=2.0.0
     - pandas >=1.0.4
     - holidays >=0.25.0,<1
+    - cmdstan >=2.34
     - tqdm >=4.36.1
     - importlib_resources
 
